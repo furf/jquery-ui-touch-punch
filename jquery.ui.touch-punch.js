@@ -5,8 +5,8 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
  * Depends:
- *	jquery.ui.widget.js
- *	jquery.ui.mouse.js
+ *  jquery.ui.widget.js
+ *  jquery.ui.mouse.js
  */
 (function ($) {
 
@@ -47,9 +47,9 @@
 
     var self = this;
 
-  	self.element.bind('touchstart.' + self.widgetName, function (event) {
-  			return self._mouseDown(makeMouseEvent(event));
-  		});
+    self.element.bind('touchstart.' + self.widgetName, function (event) {
+      return self._mouseDown(makeMouseEvent(event));
+    });
 
     _mouseInit.call(self);
   };
@@ -59,24 +59,24 @@
     var self = this,
         ret  = _mouseDown.call(self, event);
 
-  	self._touchMoveDelegate = function (event) {
-  		return self._mouseMove(makeMouseEvent(event));
-  	};
+    self._touchMoveDelegate = function (event) {
+      return self._mouseMove(makeMouseEvent(event));
+    };
 
-  	$(document)
-  		.bind('touchmove.' + self.widgetName, self._touchMoveDelegate)
-  		.bind('touchend.' + self.widgetName, self._mouseUpDelegate);
+    $(document)
+      .bind('touchmove.' + self.widgetName, self._touchMoveDelegate)
+      .bind('touchend.' + self.widgetName, self._mouseUpDelegate);
 
-  	return ret;
+    return ret;
   };
 
   mouseProto._mouseUp = function (event) {
 
     var self = this;
 
-  	$(document)
-  		.unbind('touchmove.' + self.widgetName, self._touchMoveDelegate)
-  		.unbind('touchend.' + self.widgetName, self._touchEndDelegate);
+    $(document)
+      .unbind('touchmove.' + self.widgetName, self._touchMoveDelegate)
+      .unbind('touchend.' + self.widgetName, self._touchEndDelegate);
 
     return _mouseUp.call(self, event);
   };
