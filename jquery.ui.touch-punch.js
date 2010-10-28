@@ -76,7 +76,7 @@
 
     $(document)
       .unbind('touchmove.' + self.widgetName, self._touchMoveDelegate)
-      .unbind('touchend.' + self.widgetName, self._touchEndDelegate);
+      .unbind('touchend.' + self.widgetName, self._mouseUpDelegate);
 
     return _mouseUp.call(self, event);
   };
