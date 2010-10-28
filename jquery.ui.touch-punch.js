@@ -29,7 +29,7 @@
 
   function makeMouseEvent (event) {
 
-    var touch = event.originalEvent.touches[0];
+    var touch = event.originalEvent.changedTouches[0];
 
     return $.extend(event, {
       type:    mouseEvents[event.type],
