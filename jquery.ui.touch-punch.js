@@ -62,10 +62,14 @@
     self._touchMoveDelegate = function (event) {
       return self._mouseMove(makeMouseEvent(event));
     };
+    
+    self._touchEndDelegate = function(event) {
+      return self._mouseUp(makeMouseEvent(event));
+		};
 
     $(document)
       .bind('touchmove.' + self.widgetName, self._touchMoveDelegate)
-      .bind('touchend.' + self.widgetName, self._mouseUpDelegate);
+      .bind('touchend.' + self.widgetName, self._touchEndDelegate);
 
     return ret;
   };
@@ -76,7 +80,7 @@
 
     $(document)
       .unbind('touchmove.' + self.widgetName, self._touchMoveDelegate)
-      .unbind('touchend.' + self.widgetName, self._mouseUpDelegate);
+      .unbind('touchend.' + self.widgetName, self._touchEndDelegate);
 
     return _mouseUp.call(self, event);
   };
