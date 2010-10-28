@@ -65,7 +65,7 @@
     
     self._touchEndDelegate = function(event) {
       return self._mouseUp(makeMouseEvent(event));
-		};
+  };
 
     $(document)
       .bind('touchmove.' + self.widgetName, self._touchMoveDelegate)
