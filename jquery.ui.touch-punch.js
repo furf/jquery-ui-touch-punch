@@ -26,10 +26,19 @@
         touchmove:  'mousemove',
         touchend:   'mouseup'
       };
+  
+  function getNativeEvent (event) {
 
+    while(event && typeof event.originalEvent !== "undefined") {
+      event=event.originalEvent;
+    }
+
+    return event;
+  }
+  
   function makeMouseEvent (event) {
 
-    var touch = event.originalEvent.changedTouches[0];
+    var touch = getNativeEvent(event).changedTouches[0];
 
     return $.extend(event, {
       type:    mouseEvents[event.type],
