@@ -58,9 +58,10 @@
 
     var self = this,
         ret  = _mouseDown.call(self, event);
+    self.started = true;
 
     self._touchMoveDelegate = function (event) {
-        if (self.started){
+        if (!!self.started){
             return self._mouseMove(makeMouseEvent(event));
         } else {
             return true;
@@ -81,6 +82,7 @@
   mouseProto._mouseUp = function (event) {
 
     var self = this;
+    self.started = false;
 
     $(document)
       .unbind('touchmove.' + self.widgetName, self._touchMoveDelegate)
