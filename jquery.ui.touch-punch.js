@@ -60,8 +60,12 @@
         ret  = _mouseDown.call(self, event);
 
     self._touchMoveDelegate = function (event) {
-      return self._mouseMove(makeMouseEvent(event));
-    };
+        if (self.started){
+            return self._mouseMove(makeMouseEvent(event));
+        } else {
+            return true;
+        }
+    };
     
     self._touchEndDelegate = function(event) {
       return self._mouseUp(makeMouseEvent(event));
