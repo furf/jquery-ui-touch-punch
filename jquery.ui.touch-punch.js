@@ -42,6 +42,9 @@
     var self = this;
 
     self.element.bind('touchstart.' + self.widgetName, function (event) {
+      $(document).trigger("mousedown");
+      $(event.target).trigger(makeMouseEvent(event, "mouseover"));
+      
       return self._mouseDown(makeMouseEvent(event, "mousedown"));
     });
 
