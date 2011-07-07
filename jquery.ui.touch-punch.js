@@ -19,20 +19,14 @@
   var mouseProto  = $.ui.mouse.prototype,
       _mouseInit  = mouseProto._mouseInit,
       _mouseDown  = mouseProto._mouseDown,
-      _mouseUp    = mouseProto._mouseUp,
+      _mouseUp    = mouseProto._mouseUp;
 
-      mouseEvents = {
-        touchstart: 'mousedown',
-        touchmove:  'mousemove',
-        touchend:   'mouseup'
-      };
-
-  function makeMouseEvent (event) {
+  function makeMouseEvent (event, eventType) {
 
     var touch = event.originalEvent.changedTouches[0];
 
     return $.extend(event, {
-      type:    mouseEvents[event.type],
+      type:    eventType,
       which:   1,
       pageX:   touch.pageX,
       pageY:   touch.pageY,
@@ -48,7 +42,10 @@
     var self = this;
 
     self.element.bind('touchstart.' + self.widgetName, function (event) {
-      return self._mouseDown(makeMouseEvent(event));
+      $(document).trigger("mousedown");
+      $(event.target).trigger(makeMouseEvent(event, "mouseover"));
+      
+      return self._mouseDown(makeMouseEvent(event, "mousedown"));
     });
 
     _mouseInit.call(self);
@@ -60,11 +57,11 @@
         ret  = _mouseDown.call(self, event);
 
     self._touchMoveDelegate = function (event) {
-      return self._mouseMove(makeMouseEvent(event));
+      return self._mouseMove(makeMouseEvent(event, "mousemove"));
     };
     
     self._touchEndDelegate = function(event) {
-      return self._mouseUp(makeMouseEvent(event));
+      return self._mouseUp(makeMouseEvent(event, "mouseup"));
     };
 
     $(document)
