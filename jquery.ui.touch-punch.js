@@ -60,6 +60,8 @@
 
   mouseProto._mouseDown = function (event) {
 
+    if (event.isDefaultPrevented()){return;} // check if someone has already killed this event
+    
     var self = this,
         ret  = _mouseDown.call(self, event);
 
