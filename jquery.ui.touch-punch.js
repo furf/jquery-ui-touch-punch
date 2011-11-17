@@ -48,6 +48,10 @@
     var self = this;
 
     self.element.bind('touchstart.' + self.widgetName, function (event) {
+      // this is because the mouse ui handler has a mousedown handler on the root document to handle edge cases
+      // where the mouseDown event can be called multiple times in a row, problem is touch events don't exactly trigger
+      // mousedown events correctly. So before we call _mouseDown(), we need to clear the root variable
+      $(document).mousedown(); 
       return self._mouseDown(makeMouseEvent(event));
     });
 
@@ -56,6 +60,8 @@
 
   mouseProto._mouseDown = function (event) {
 
+    if (event.isDefaultPrevented()){return;} // check if someone has already killed this event
+    
     var self = this,
         ret  = _mouseDown.call(self, event);
 
