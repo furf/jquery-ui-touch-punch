@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 0.1.1
+ * jQuery UI Touch Punch 0.1.2
  *
  * Copyright 2010, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -58,10 +58,10 @@
 
     var self = this,
         ret  = _mouseDown.call(self, event);
-    self.started = true;
+    $.ui.mouse._mouseStarted = true;
 
     self._touchMoveDelegate = function (event) {
-        if (!!self.started){
+        if (!!$.ui.mouse._mouseStarted){
             return self._mouseMove(makeMouseEvent(event));
         } else {
             return true;
@@ -82,7 +82,7 @@
   mouseProto._mouseUp = function (event) {
 
     var self = this;
-    self.started = false;
+    $.ui._mouseStarted = false;
 
     $(document)
       .unbind('touchmove.' + self.widgetName, self._touchMoveDelegate)
