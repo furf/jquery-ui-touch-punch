@@ -10,7 +10,7 @@
  */
 (function ($) {
 
-  $.support.touch = typeof Touch === 'object';
+  $.support.touch = $.support.touch || 'ontouchend' in document;
 
   if (!$.support.touch) {
     return;
