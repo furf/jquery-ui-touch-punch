@@ -16,23 +16,18 @@
     return;
   }
 
-  var mouseProto  = $.ui.mouse.prototype,
+  var $doc        = $(document),
+      mouseProto  = $.ui.mouse.prototype,
       _mouseInit  = mouseProto._mouseInit,
       _mouseDown  = mouseProto._mouseDown,
-      _mouseUp    = mouseProto._mouseUp,
+      _mouseUp    = mouseProto._mouseUp;
 
-      mouseEvents = {
-        touchstart: 'mousedown',
-        touchmove:  'mousemove',
-        touchend:   'mouseup'
-      };
-
-  function makeMouseEvent (event) {
+  function translateTouchEventToMouseEvent (event, translatedType) {
 
     var touch = event.originalEvent.changedTouches[0];
 
     return $.extend(event, {
-      type:    mouseEvents[event.type],
+      type:    translatedType,
       which:   1,
       pageX:   touch.pageX,
       pageY:   touch.pageY,
@@ -48,8 +43,16 @@
     var self = this;
 
     self.element.bind('touchstart.' + self.widgetName, function (event) {
-      return self._mouseDown(makeMouseEvent(event));
+      return self._mouseDown(translateTouchEventToMouseEvent(event, 'mousedown'));
     });
+
+    self._touchMoveDelegate = function (event) {
+      return self._mouseMove(translateTouchEventToMouseEvent(event, 'mousemove'));
+    };
+    
+    self._touchEndDelegate = function(event) {
+      return self._mouseUp(translateTouchEventToMouseEvent(event, 'mouseup'));
+    };
 
     _mouseInit.call(self);
   };
@@ -58,16 +61,8 @@
 
     var self = this,
         ret  = _mouseDown.call(self, event);
-
-    self._touchMoveDelegate = function (event) {
-      return self._mouseMove(makeMouseEvent(event));
-    };
-    
-    self._touchEndDelegate = function(event) {
-      return self._mouseUp(makeMouseEvent(event));
-    };
-
-    $(document)
+ 
+    $doc
       .bind('touchmove.' + self.widgetName, self._touchMoveDelegate)
       .bind('touchend.' + self.widgetName, self._touchEndDelegate);
 
@@ -78,7 +73,7 @@
 
     var self = this;
 
-    $(document)
+    $doc
       .unbind('touchmove.' + self.widgetName, self._touchMoveDelegate)
       .unbind('touchend.' + self.widgetName, self._touchEndDelegate);
 
