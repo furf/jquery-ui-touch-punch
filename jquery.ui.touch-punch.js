@@ -133,7 +133,6 @@
     self._touchMove = $.proxy(_touchMove, self);
     self._touchEnd = $.proxy(_touchEnd, self);
 
-
     // Delegate the touchstart handler to the widget's element
     self.element.bind('touchstart.' + self.widgetName, self._touchStart);
 
