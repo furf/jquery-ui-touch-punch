@@ -1,3 +1,5 @@
+NOTE: Currently experiencing some wonkiness when used with newer versions of jQuery UI.
+
 === jQuery UI Touch Punch ===
 This little library was designed to punch in touch events to jQuery UI. It provides touch proxies to the major mouse events. 
 
