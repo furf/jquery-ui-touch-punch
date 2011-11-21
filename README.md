@@ -1,8 +1,8 @@
 jQuery UI Touch Punch
 ======================
 
-Preface
--------
+About
+-----
 
 This little library was written to punch in touch events to jQuery UI by providing touch proxies that simulate mouse events. 
 
