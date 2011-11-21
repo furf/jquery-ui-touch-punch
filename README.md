@@ -1,22 +1,12 @@
-WARNING: Currently experiencing some wonkiness when used with jQuery UI 1.8.16. To ensure proper behavior, use an earlier version.
+*jQuery UI Touch Punch*
 
-=== jQuery UI Touch Punch ===
-This little library was designed to punch in touch events to jQuery UI. It provides touch proxies to the major mouse events. 
+This little library was written to punch in touch events to jQuery UI by providing touch proxies that simulate mouse events. 
 
-This punch was written as a quick demonstration for a friend and I have not used it in production. Since I posted it, a number of people have started using it. (This was an unexpected consequence that I really should have expected!)
+This punch was written as a quick demonstration for a friend and I have not used it in production. Since I posted it, a number of people have started using it. (This was an unexpected consequence that I really should have expected!) Please note: this library is not a priority for me, I'm a busy guy and fixes will be made as time allows. In the past I have been slow to respond to issues — my apologies — but in the future I will make a more concerted effort to keep it functional and up-to-date.
 
-Check out some live examples at <http://furf.com/exp/touch-punch/> (and use a touch-capable device, silly).
+I recently did a complete re-write which seems to have addressed all known issues. But there may be more! If you use this library and have questions, fire them at me on Twitter (@furf). If you find errors, please file them as issues on Github, providing detailed information including the versions of jQuery and jQuery UI that you are using and, if possible, an example of the failing code. Even better, do all that and then fork the repo, fix the bug and make a pull request. The best thing about open source is community involvement. Please feel free to take part. 
 
-There have been a number of issues logged and I will do what I can to mitigate them. Since this library is not a priority for me, it has taken a long time for me to respond. (I will try to be better about that now that so many people are seeing benefit from the library.)
-
-That said, there may be use cases that I cannot simply patch due to the limitations of jQuery UI. The jQuery and jQuery UI teams have done an amazing job of updating their code with great frequency. I do not have the manpower to keep up with them or properly test for regressions in all combinations.
-
-=== YMMV ===
-If you use my punch and it works, awesome! If it doesn't, please let me know by filing a proper issue with detailed information, including jQuery and jQuery UI versions, and an example where the code breaks. Better yet, fork this repo and hack away! If you come up with a fix, post it and submit a pull request. (Please include a broken example that I can test against.) As I said, I will do my best to keep this library updated more frequently.
+In the meanwhile, check out some live examples at <http://furf.com/exp/touch-punch/> (and use a touch-capable device, silly).
 
 Cheers!
-
 furf
-
-
-
