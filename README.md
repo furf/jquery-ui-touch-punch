@@ -17,9 +17,9 @@ furf
 Include touch punch after jQuery UI and before its first usage.
 
 ```html
-<script src="http://code.jquery.com/jquery-1.7.js"></script>
-<script src="http://code.jquery.com/ui/1.8.16/jquery-ui.js"></script>
-<script src="jquery.ui.touch-punch.js"></script>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.8.16/jquery-ui.min.js"></script>
+<script src="jquery.ui.touch-punch.min.js"></script>
 <script>
 $('#widget').draggable();
 </script>
