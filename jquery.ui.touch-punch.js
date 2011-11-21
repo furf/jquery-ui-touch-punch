@@ -11,7 +11,7 @@
 (function ($) {
 
   // Detect touch support
-  $.support.touch = typeof Touch === 'object';
+  $.support.touch = 'ontouchend' in document;
 
   // Ignore browsers without touch support
   if (!$.support.touch) {
