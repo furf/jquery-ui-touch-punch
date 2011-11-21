@@ -9,4 +9,5 @@ I recently did a complete re-write which seems to have addressed all known issue
 In the meanwhile, check out some live examples at <http://furf.com/exp/touch-punch/> (and use a touch-capable device, silly).
 
 Cheers!
+
 furf
