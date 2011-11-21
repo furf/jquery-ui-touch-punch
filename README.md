@@ -1,4 +1,8 @@
-*jQuery UI Touch Punch*
+jQuery UI Touch Punch
+======================
+
+Preface
+-------
 
 This little library was written to punch in touch events to jQuery UI by providing touch proxies that simulate mouse events. 
 
@@ -12,7 +16,8 @@ Cheers!
 
 furf
 
-*Usage*
+Usage
+-----
 
 Include touch punch after jQuery UI and before its first usage.
 
@@ -24,3 +29,5 @@ Include touch punch after jQuery UI and before its first usage.
 $('#widget').draggable();
 </script>
 ```
+
+That's it!
