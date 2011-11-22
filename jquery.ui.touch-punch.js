@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 0.2.0
+ * jQuery UI Touch Punch 0.2.1
  *
  * Copyright 2011, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -41,21 +41,21 @@
     
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
-      simulatedType,      // type            
-      true,               // bubbles                    
-      true,               // cancelable                 
-      window,             // view                       
-      1,                  // detail                     
-      touch.screenX,      // screenX                    
-      touch.screenY,      // screenY                    
-      touch.clientX,      // clientX                    
-      touch.clientY,      // clientY                    
-      false,              // ctrlKey                    
-      false,              // altKey                     
-      false,              // shiftKey                   
-      false,              // metaKey                    
-      0,                  // button                     
-      null                // relatedTarget              
+      simulatedType,    // type
+      true,             // bubbles                    
+      true,             // cancelable                 
+      window,           // view                       
+      1,                // detail                     
+      touch.screenX,    // screenX                    
+      touch.screenY,    // screenY                    
+      touch.clientX,    // clientX                    
+      touch.clientY,    // clientY                    
+      false,            // ctrlKey                    
+      false,            // altKey                     
+      false,            // shiftKey                   
+      false,            // metaKey                    
+      0,                // button                     
+      null              // relatedTarget              
     );
 
     // Dispatch the simulated event to the target element
@@ -68,8 +68,10 @@
    */
   mouseProto._touchStart = function (event) {
 
+    var self = this;
+
     // Ignore the event if another widget is already being handled
-    if (touchHandled) {
+    if (touchHandled || !self._mouseCapture(event)) {
       return;
     }
 
@@ -77,7 +79,7 @@
     touchHandled = true;
 
     // Track movement to determine if interaction was a click
-    this._touchMoved = false;
+    self._touchMoved = false;
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -95,6 +97,11 @@
    */
   mouseProto._touchMove = function (event) {
 
+    // Ignore event if not handled
+    if (!touchHandled) {
+      return;
+    }
+
     // Interaction was not a click
     this._touchMoved = true;
 
@@ -107,6 +114,11 @@
    * @param {Object} event The document's touchend event
    */
   mouseProto._touchEnd = function (event) {
+
+    // Ignore event if not handled
+    if (!touchHandled) {
+      return;
+    }
 
     // Simulate the mouseup event
     simulateMouseEvent(event, 'mouseup');
