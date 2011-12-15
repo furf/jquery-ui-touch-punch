@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 0.2.1
+ * jQuery UI Touch Punch 0.2.2
  *
  * Copyright 2011, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -71,7 +71,7 @@
     var self = this;
 
     // Ignore the event if another widget is already being handled
-    if (touchHandled || !self._mouseCapture(event)) {
+    if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
       return;
     }
 
