@@ -9,7 +9,6 @@
  *  jquery.ui.mouse.js
  */
 (function ($) {
-
   // Detect touch support
   $.support.touch = 'ontouchend' in document;
 
@@ -67,8 +66,11 @@
    * @param {Object} event The widget element's touchstart event
    */
   mouseProto._touchStart = function (event) {
-
     var self = this;
+
+    if (typeof event.target.touchPunch === "undefined"){
+      return;
+    }
 
     // Ignore the event if another widget is already being handled
     if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
@@ -102,6 +104,10 @@
       return;
     }
 
+    if (typeof event.target.touchPunch === "undefined"){
+      return;
+    }
+
     // Interaction was not a click
     this._touchMoved = true;
 
@@ -120,6 +126,10 @@
       return;
     }
 
+    if (typeof event.target.touchPunch === "undefined"){
+      return;
+    }
+
     // Simulate the mouseup event
     simulateMouseEvent(event, 'mouseup');
 
@@ -128,7 +138,6 @@
 
     // If the touch interaction did not move, it should trigger a click
     if (!this._touchMoved) {
-
       // Simulate the click event
       simulateMouseEvent(event, 'click');
     }
@@ -137,11 +146,24 @@
     touchHandled = false;
   };
 
-  // Delegate the touch handlers to the widget's element
   $(document)
     .bind('touchstart', $.proxy(mouseProto, '_touchStart'))
     .bind('touchmove', $.proxy(mouseProto, '_touchMove'))
     .bind('touchend', $.proxy(mouseProto, '_touchEnd'));
 
+  /**
+   * A duck punch of the $.ui.mouse _mouseInit method to support touch events.
+   * This method extends the widget with bound touch event handlers that
+   * translate touch events to mouse events and pass them to the widget's
+   * original mouse event handling methods.
+   */
+  mouseProto._mouseInit = function () {
+    var self = this;
+
+    this.element[0].touchPunch = true;
+
+    // Call the original $.ui.mouse init method
+    _mouseInit.call(self);
+  };
 
 })(jQuery);
