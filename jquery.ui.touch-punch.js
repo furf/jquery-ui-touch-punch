@@ -137,24 +137,11 @@
     touchHandled = false;
   };
 
-  /**
-   * A duck punch of the $.ui.mouse _mouseInit method to support touch events.
-   * This method extends the widget with bound touch event handlers that
-   * translate touch events to mouse events and pass them to the widget's
-   * original mouse event handling methods.
-   */
-  mouseProto._mouseInit = function () {
-    
-    var self = this;
+  // Delegate the touch handlers to the widget's element
+  $(document)
+    .bind('touchstart', $.proxy(mouseProto, '_touchStart'))
+    .bind('touchmove', $.proxy(mouseProto, '_touchMove'))
+    .bind('touchend', $.proxy(mouseProto, '_touchEnd'));
 
-    // Delegate the touch handlers to the widget's element
-    self.element
-      .bind('touchstart', $.proxy(self, '_touchStart'))
-      .bind('touchmove', $.proxy(self, '_touchMove'))
-      .bind('touchend', $.proxy(self, '_touchEnd'));
-
-    // Call the original $.ui.mouse init method
-    _mouseInit.call(self);
-  };
 
 })(jQuery);
