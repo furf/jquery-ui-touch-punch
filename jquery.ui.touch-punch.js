@@ -10,8 +10,11 @@
  */
 (function ($) {
 
+  var pointerEnabled = window.navigator.pointerEnabled
+    || window.navigator.msPointerEnabled;
+
   // Detect touch support
-  $.support.touch = 'ontouchend' in document;
+  $.support.touch = 'ontouchend' in document || pointerEnabled;
 
   // Ignore browsers without touch support
   if (!$.support.touch) {
@@ -30,7 +33,8 @@
   function simulateMouseEvent (event, simulatedType) {
 
     // Ignore multi-touch events
-    if (event.originalEvent.touches.length > 1) {
+    if (event.originalEvent.touches.length > 1
+      || pointerEnabled && !event.isPrimary) {
       return;
     }
 
@@ -41,21 +45,21 @@
     
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
-      simulatedType,    // type
-      true,             // bubbles                    
-      true,             // cancelable                 
-      window,           // view                       
-      1,                // detail                     
-      touch.screenX,    // screenX                    
-      touch.screenY,    // screenY                    
-      touch.clientX,    // clientX                    
-      touch.clientY,    // clientY                    
-      false,            // ctrlKey                    
-      false,            // altKey                     
-      false,            // shiftKey                   
-      false,            // metaKey                    
-      0,                // button                     
-      null              // relatedTarget              
+      simulatedType,                  // type
+      true,                           // bubbles                    
+      true,                           // cancelable                 
+      window,                         // view                       
+      1,                              // detail                     
+      event.screenX || touch.screenX, // screenX                    
+      event.screenY || touch.screenY, // screenY                    
+      event.clientX || touch.clientX, // clientX                    
+      event.clientY || touch.clientY, // clientY                    
+      false,                          // ctrlKey                    
+      false,                          // altKey                     
+      false,                          // shiftKey                   
+      false,                          // metaKey                    
+      0,                              // button                     
+      null                            // relatedTarget              
     );
 
     // Dispatch the simulated event to the target element
@@ -148,10 +152,20 @@
     var self = this;
 
     // Delegate the touch handlers to the widget's element
-    self.element
-      .bind('touchstart', $.proxy(self, '_touchStart'))
-      .bind('touchmove', $.proxy(self, '_touchMove'))
-      .bind('touchend', $.proxy(self, '_touchEnd'));
+    if (pointerEnabled) {
+      self.element
+        .bind('pointerDown', $.proxy(self, '_touchStart'))
+        .bind('pointerMove', $.proxy(self, '_touchMove'))
+        .bind('pointerUp', $.proxy(self, '_touchEnd'))
+        .bind('MSPointerDown', $.proxy(self, '_touchStart'))
+        .bind('MSPointerMove', $.proxy(self, '_touchMove'))
+        .bind('MSPointerUp', $.proxy(self, '_touchEnd'));
+    } else {
+      self.element
+        .bind('touchstart', $.proxy(self, '_touchStart'))
+        .bind('touchmove', $.proxy(self, '_touchMove'))
+        .bind('touchend', $.proxy(self, '_touchEnd'));
+    }
 
     // Call the original $.ui.mouse init method
     _mouseInit.call(self);
