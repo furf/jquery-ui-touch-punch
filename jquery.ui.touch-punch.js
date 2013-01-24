@@ -33,33 +33,32 @@
   function simulateMouseEvent (event, simulatedType) {
 
     // Ignore multi-touch events
-    if (event.originalEvent.touches.length > 1
-      || pointerEnabled && !event.isPrimary) {
+    if ((!pointerEnabled && event.originalEvent.touches.length > 1) || (pointerEnabled && !event.isPrimary)) {
       return;
     }
 
     event.preventDefault();
 
-    var touch = event.originalEvent.changedTouches[0],
+    var evt = pointerEnabled ? event.originalEvent : event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
     
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
       simulatedType,                  // type
-      true,                           // bubbles                    
-      true,                           // cancelable                 
-      window,                         // view                       
-      1,                              // detail                     
-      event.screenX || touch.screenX, // screenX                    
-      event.screenY || touch.screenY, // screenY                    
-      event.clientX || touch.clientX, // clientX                    
-      event.clientY || touch.clientY, // clientY                    
-      false,                          // ctrlKey                    
-      false,                          // altKey                     
-      false,                          // shiftKey                   
-      false,                          // metaKey                    
-      0,                              // button                     
-      null                            // relatedTarget              
+      true,                           // bubbles
+      true,                           // cancelable
+      window,                         // view
+      1,                              // detail
+      evt.screenX,                    // screenX
+      evt.screenY,                    // screenY
+      evt.clientX,                    // clientX
+      evt.clientY,                    // clientY
+      false,                          // ctrlKey
+      false,                          // altKey
+      false,                          // shiftKey
+      false,                          // metaKey
+      0,                              // button
+      null                            // relatedTarget
     );
 
     // Dispatch the simulated event to the target element
@@ -75,7 +74,7 @@
     var self = this;
 
     // Ignore the event if another widget is already being handled
-    if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
+    if (touchHandled || (!pointerEnabled && !self._mouseCapture(event.originalEvent.changedTouches[0]))) {
       return;
     }
 
