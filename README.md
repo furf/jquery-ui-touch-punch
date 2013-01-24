@@ -38,4 +38,4 @@ Just follow these simple steps to enable touch events in your jQuery UI app:
     <script>$('#widget').draggable();</script>
     ```
 
-_Tested on iPad, iPhone, Android and other touch-enabled mobile devices._
+_Tested on iPad, iPhone, Android, IE10 and other touch-enabled mobile devices._
