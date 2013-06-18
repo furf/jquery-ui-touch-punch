@@ -18,6 +18,11 @@
     return;
   }
 
+  // Ignore browsers without mouse support
+  if (!$.ui.mouse) {
+    return;
+  }
+
   var mouseProto = $.ui.mouse.prototype,
       _mouseInit = mouseProto._mouseInit,
       touchHandled;
