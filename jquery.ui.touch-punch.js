@@ -39,6 +39,9 @@
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
     
+    var zoomRatio=b("body").css("zoom");
+    if(isNaN(zoomRatio))zoomRatio=1;
+    
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
       simulatedType,    // type
@@ -46,10 +49,10 @@
       true,             // cancelable                 
       window,           // view                       
       1,                // detail                     
-      touch.screenX,    // screenX                    
-      touch.screenY,    // screenY                    
-      touch.clientX,    // clientX                    
-      touch.clientY,    // clientY                    
+      touch.screenX / zoomRatio,    // screenX                    
+      touch.screenY / zoomRatio,    // screenY                    
+      touch.clientX / zoomRatio,    // clientX                    
+      touch.clientY / zoomRatio,    // clientY                    
       false,            // ctrlKey                    
       false,            // altKey                     
       false,            // shiftKey                   
