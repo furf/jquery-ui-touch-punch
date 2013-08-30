@@ -149,9 +149,9 @@
 
     // Delegate the touch handlers to the widget's element
     self.element
-      .bind('touchstart', $.proxy(self, '_touchStart'))
-      .bind('touchmove', $.proxy(self, '_touchMove'))
-      .bind('touchend', $.proxy(self, '_touchEnd'));
+      .on('touchstart', $.proxy(self, '_touchStart'))
+      .on('touchmove', $.proxy(self, '_touchMove'))
+      .on('touchend', $.proxy(self, '_touchEnd'));
 
     // Call the original $.ui.mouse init method
     _mouseInit.call(self);
