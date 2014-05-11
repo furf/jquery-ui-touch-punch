@@ -71,8 +71,10 @@
 
     var self = this;
 
+    var touchEvent = $.extend($.Event(event), event.originalEvent.changedTouches[0]);
+
     // Ignore the event if another widget is already being handled
-    if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
+    if (touchHandled || !self._mouseCapture(touchEvent)) {
       return;
     }
 
