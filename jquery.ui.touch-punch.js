@@ -8,7 +8,20 @@
  *  jquery.ui.widget.js
  *  jquery.ui.mouse.js
  */
-(function ($) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+
+    // AMD. Register as an anonymous module.
+    define([
+      'jquery',
+      'jquery-ui/mouse'
+    ], factory);
+  } else {
+
+    // Browser globals
+    factory(jQuery);
+  }
+}(function($) {
 
   // Detect touch support
   $.support.touch = 'ontouchend' in document;
@@ -177,4 +190,5 @@
     _mouseDestroy.call(self);
   };
 
-})(jQuery);
+  return $;
+}));
