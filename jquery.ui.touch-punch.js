@@ -35,11 +35,15 @@
       return;
     }
 
-    event.preventDefault();
-
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
     
+    if ($(touch.target).is("input") || $(touch.target).is("textarea")) {
+      event.stopPropagation();
+    } else {
+      event.preventDefault();
+    }
+
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
       simulatedType,    // type
