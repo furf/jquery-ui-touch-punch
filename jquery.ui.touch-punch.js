@@ -155,7 +155,9 @@
       touchend: $.proxy(self, '_touchEnd')
     });
 
-    self.element.css('-ms-touch-action', 'none');
+    if($.browser.msie){
+      self.element.css('-ms-touch-action', 'none');
+    }
 
     // Call the original $.ui.mouse init method
     _mouseInit.call(self);
