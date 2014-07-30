@@ -10,7 +10,7 @@
  */
 (function ($) {
 
-	var _touchMoved= false;
+	var _touchMoved= false, _start, _end;
 
   // Detect touch support
   $.support.touch = 'ontouchend' in document;
@@ -83,6 +83,9 @@
 
     // Track movement to determine if interaction was a click
     _touchMoved = false;
+    
+    // Get the start time to test for click
+    _start = +new Date();
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -104,8 +107,7 @@
     if (!touchHandled) {
       return;
     }
-
-    // Interaction was not a click
+    // Seen some movement may still be a click if quick
     _touchMoved = true;
 
     // Simulate the mousemove event
@@ -122,6 +124,9 @@
     if (!touchHandled) {
       return;
     }
+    
+    // Get the end time of the touch
+    _end = +new Date();
 
     // Simulate the mouseup event
     simulateMouseEvent(event, 'mouseup');
@@ -130,7 +135,8 @@
     simulateMouseEvent(event, 'mouseout');
 
     // If the touch interaction did not move, it should trigger a click
-    if (!_touchMoved) {
+    // Also if the touch lasted less than 300ms count as click
+    if (!_touchMoved || _end - _start < 300) {
 
       // Simulate the click event
       simulateMouseEvent(event, 'click');
