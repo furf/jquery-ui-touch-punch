@@ -10,11 +10,13 @@
  */
 (function ($) {
 
+
   // Detect touch support
   $.support.touch = 'ontouchend' in document;
+  $.support.mspointer = window.navigator.msPointerEnabled;
 
   // Ignore browsers without touch support
-  if (!$.support.touch) {
+  if (!$.support.touch && !$.support.mspointer) {
     return;
   }
 
@@ -147,6 +149,10 @@
   mouseProto._mouseInit = function () {
     
     var self = this;
+
+    if ($.support.mspointer) {
+      self.element[0].style.msTouchAction = 'none';
+    }
 
     // Delegate the touch handlers to the widget's element
     self.element.bind({
