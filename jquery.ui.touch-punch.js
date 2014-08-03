@@ -35,8 +35,9 @@
       return;
     }
 
-    event.preventDefault();
-
+    if ($(event.currentTarget).hasClass('touch-scroll') === false) {
+        event.preventDefault();
+    }
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
     
