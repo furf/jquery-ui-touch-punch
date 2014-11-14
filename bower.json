@@ -1,17 +1,10 @@
 {
   "name": "jqueryui-touch-punch",
   "version": "0.2.3",
-<<<<<<< HEAD
   "main": "jquery.ui.touch-punch.min.js",
   "ignore": [],
   "dependencies": {
     "jquery": ">=1.6",
     "jquery-ui": ">=1.8"
-=======
-  "main": "jquery.ui.touch-punch.js",
-  "dependencies": {
-    "jquery-ui": "~1.10.1",
-    "jquery": ">= 1.7.1"    
->>>>>>> Update bower.json
   }
 }
