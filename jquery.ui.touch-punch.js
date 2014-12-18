@@ -21,6 +21,9 @@
   var mouseProto = $.ui.mouse.prototype,
       _mouseInit = mouseProto._mouseInit,
       _mouseDestroy = mouseProto._mouseDestroy,
+      _mouseDown = mouseProto._mouseDown,
+      _mouseMove = mouseProto._mouseMove,
+      touchEvent,
       touchHandled;
 
   /**
@@ -35,7 +38,7 @@
       return;
     }
 
-    event.preventDefault();
+    touchEvent = event;
 
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
@@ -175,6 +178,38 @@
 
     // Call the original $.ui.mouse destroy method
     _mouseDestroy.call(self);
+  };
+
+  /**
+   * Hook the $.ui.mouse _mouseDown method so that we can call preventDefault
+   * on the original touch event if and only if the default handler called
+   * preventDefault on the simulated mouse event.
+   */
+  mouseProto._mouseDown = function (event) {
+
+    var self = this;
+
+    _mouseDown.call(self, event);
+
+    if (event.isDefaultPrevented()) {
+      touchEvent.preventDefault();
+    }
+  };
+
+  /**
+   * Hook the $.ui.mouse _mouseMove method so that we can call preventDefault
+   * on the original touch event if and only if the default handler called
+   * preventDefault on the simulated mouse event.
+   */
+  mouseProto._mouseMove = function (event) {
+
+    var self = this;
+
+    _mouseMove.call(self, event);
+
+    if (event.isDefaultPrevented()) {
+      touchEvent.preventDefault();
+    }
   };
 
 })(jQuery);
