@@ -5,7 +5,7 @@
 
 _[Visit the official Touch Punch website](http://touchpunch.furf.com)._
 
-Currently, [jQuery UI](http://jqueryui.com/) user interface library does not support the use of touch events in their widgets and interactions. This means that the slick UI you designed and tested in your desktop browser will fail on most, if not all, touch-enabled mobile devices, becuase jQuery UI listens to mouse events—mouseover, mousemove and mouseout—not touch events—touchstart, touchmove and touchend.
+Currently, [jQuery UI](http://jqueryui.com/) user interface library does not support the use of touch events in their widgets and interactions. This means that the slick UI you designed and tested in your desktop browser will fail on most, if not all, touch-enabled mobile devices, because jQuery UI listens to mouse events—mouseover, mousemove and mouseout—not touch events—touchstart, touchmove and touchend.
 
 That's where jQuery UI Touch Punch comes in. Touch Punch works by using [simulated events](https://developer.mozilla.org/en/DOM/document.createEvent) to map [touch events](http://www.html5rocks.com/en/mobile/touch/) to their mouse event analogs. Simply include the script on your page and your touch events will be turned into their corresponding mouse events to which jQuery UI will respond as expected.
 
