@@ -1,0 +1,8 @@
+{
+  "name": "jquery-ui-touch-punch",
+  "version": "0.1.0",
+  "main": "jquery.ui.touch-punch.js",
+  "dependencies": {
+    "jquery.ui": ">=1.8"
+  }
+}
