@@ -61,6 +61,17 @@
 
     // Dispatch the simulated event to the target element
     event.target.dispatchEvent(simulatedEvent);
+    var target = event.target;
+
+    // Dispatch the simulated event to the target element
+    if (simulatedType === 'mousemove') {
+      // Special handling for mouse move: fire on element at the current location instead:
+      var elementAtPoint = document.elementFromPoint(event.clientX, event.clientY);
+      if (elementAtPoint !== null) {
+          target = elementAtPoint;
+      }
+    }
+    target.dispatchEvent(simulatedEvent);
   }
 
   /**
