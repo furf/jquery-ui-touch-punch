@@ -21,6 +21,7 @@
   var mouseProto = $.ui.mouse.prototype,
       _mouseInit = mouseProto._mouseInit,
       _mouseDestroy = mouseProto._mouseDestroy,
+      offset_map = [],
       touchHandled;
 
   /**
@@ -38,7 +39,10 @@
     event.preventDefault();
 
     var touch = event.originalEvent.changedTouches[0],
-        simulatedEvent = document.createEvent('MouseEvents');
+        simulatedEvent = document.createEvent('MouseEvents'),
+        doc, frameOffset,
+        offsetX = 0,
+        offsetY = 0;
     
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
@@ -61,6 +65,41 @@
 
     // Dispatch the simulated event to the target element
     event.target.dispatchEvent(simulatedEvent);
+    
+    if (( doc = $( event.target )[ 0 ].ownerDocument ) !== document ) {
+      simulatedEvent = document.createEvent('MouseEvents');
+      
+      frame = (doc.defaultView || doc.parentWindow).frameElement;
+      frameOffset = offset_map[ frame.id ];
+      if ( !frameOffset ) {
+        frameOffset = offset_map[ frame.id ] = $( frame ).offset();
+      }
+      
+      offsetX = frameOffset.left;
+      offsetY = frameOffset.top;
+      
+      // Initialize the simulated mouse event using the touch event's coordinates
+      simulatedEvent.initMouseEvent(
+        simulatedType,              // type
+        true,                       // bubbles                    
+        true,                       // cancelable                 
+        window,                     // view                       
+        1,                          // detail                     
+        touch.screenX + offsetX,    // screenX                    
+        touch.screenY + offsetY,    // screenY                    
+        touch.clientX + offsetX,    // clientX                    
+        touch.clientY + offsetY,    // clientY                    
+        false,                      // ctrlKey                    
+        false,                      // altKey                     
+        false,                      // shiftKey                   
+        false,                      // metaKey                    
+        0,                          // button                     
+        null                        // relatedTarget              
+      );
+
+      // Dispatch the simulated event to the target element
+      document.dispatchEvent(simulatedEvent);
+    }
   }
 
   /**
