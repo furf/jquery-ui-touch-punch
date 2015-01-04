@@ -10,6 +10,8 @@
  */
 (function ($) {
 
+	var _touchMoved= false;
+
   // Detect touch support
   $.support.touch = 'ontouchend' in document;
 
@@ -80,7 +82,7 @@
     touchHandled = true;
 
     // Track movement to determine if interaction was a click
-    self._touchMoved = false;
+    _touchMoved = false;
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -104,7 +106,7 @@
     }
 
     // Interaction was not a click
-    this._touchMoved = true;
+    _touchMoved = true;
 
     // Simulate the mousemove event
     simulateMouseEvent(event, 'mousemove');
@@ -128,7 +130,7 @@
     simulateMouseEvent(event, 'mouseout');
 
     // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
+    if (!_touchMoved) {
 
       // Simulate the click event
       simulateMouseEvent(event, 'click');
