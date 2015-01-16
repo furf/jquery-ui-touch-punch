@@ -1,7 +1,7 @@
 ﻿/*!
  * jQuery UI Touch Punch 0.2.3
  *
- * Copyright 2011–2014, Dave Furfero
+ * Copyright 2011-2014, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
  * Depends:
@@ -24,7 +24,8 @@
       _mouseDown = mouseProto._mouseDown,
       _mouseMove = mouseProto._mouseMove,
       touchEvent,
-      touchHandled;
+      touchHandled,
+      touchStartDefaultPrevented;
 
   /**
    * Simulate a mouse event based on a corresponding touch event
@@ -67,6 +68,17 @@
   }
 
   /**
+   * Get the x,y position of a touch event
+   * @param {Object} event A touch event
+   */
+  function getTouchCoords (event) {
+    return {
+      x: event.originalEvent.changedTouches[0].pageX,
+      y: event.originalEvent.changedTouches[0].pageY
+    };
+  }
+
+  /**
    * Handle the jQuery UI widget's touchstart events
    * @param {Object} event The widget element's touchstart event
    */
@@ -82,8 +94,10 @@
     // Set the flag to prevent other widgets from inheriting the touch event
     touchHandled = true;
 
+    touchStartDefaultPrevented = false;
+
     // Track movement to determine if interaction was a click
-    self._touchMoved = false;
+    self._startPos = getTouchCoords(event);
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -106,9 +120,6 @@
       return;
     }
 
-    // Interaction was not a click
-    this._touchMoved = true;
-
     // Simulate the mousemove event
     simulateMouseEvent(event, 'mousemove');
   };
@@ -124,18 +135,21 @@
       return;
     }
 
-    // Simulate the mouseup event
-    simulateMouseEvent(event, 'mouseup');
+    if (touchStartDefaultPrevented) {
 
-    // Simulate the mouseout event
-    simulateMouseEvent(event, 'mouseout');
+      // Simulate the mouseup event
+      simulateMouseEvent(event, 'mouseup');
 
-    // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
+      // Simulate the mouseout event
+      simulateMouseEvent(event, 'mouseout');
 
-      // Simulate the click event
-      event.preventDefault();
-      simulateMouseEvent(event, 'click');
+      // If the touch interaction did not move, it should trigger a click
+      var endPos = getTouchCoords(event);
+      if ((Math.abs(endPos.x - this._startPos.x) < 10) && (Math.abs(endPos.y - this._startPos.y) < 10)) {
+
+        // Simulate the click event
+        simulateMouseEvent(event, 'click');
+      }
     }
 
     // Unset the flag to allow other widgets to inherit the touch event
@@ -194,6 +208,7 @@
 
     if (event.isDefaultPrevented()) {
       touchEvent.preventDefault();
+      touchStartDefaultPrevented = true;
     }
   };
 
