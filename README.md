@@ -39,3 +39,36 @@ Just follow these simple steps to enable touch events in your jQuery UI app:
     ```
 
 _Tested on iPad, iPhone, Android and other touch-enabled mobile devices._
+
+## Using Touch Punch with RequireJS
+
+jQuery UI 1.11+ is required for using Touch Punch with RequireJS.
+
+### Configuration
+
+The base path of jQuery UI have to be configured in the require config json:
+
+```javascript
+requirejs.config({
+    paths: {
+        // for example with bower
+       'jquery-ui': 'bower_components/jquery-ui/ui',
+       // ... other dependencies
+    }
+});
+```
+
+### Example
+
+To create an touch friendly slider, just require all dependencies like the following example:
+
+```javascript
+require([
+    'jquery',
+    'jquery.ui.touch-punch',
+    'jquery-ui/slider'
+], function($) {
+    // init the slider
+    $('input').slider();
+});
+```
