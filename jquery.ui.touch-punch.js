@@ -39,24 +39,24 @@
 
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
-    
+
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
       simulatedType,    // type
-      true,             // bubbles                    
-      true,             // cancelable                 
-      window,           // view                       
-      1,                // detail                     
-      touch.screenX,    // screenX                    
-      touch.screenY,    // screenY                    
-      touch.clientX,    // clientX                    
-      touch.clientY,    // clientY                    
-      false,            // ctrlKey                    
-      false,            // altKey                     
-      false,            // shiftKey                   
-      false,            // metaKey                    
-      0,                // button                     
-      null              // relatedTarget              
+      true,             // bubbles
+      true,             // cancelable
+      window,           // view
+      1,                // detail
+      touch.screenX,    // screenX
+      touch.screenY,    // screenY
+      touch.clientX,    // clientX
+      touch.clientY,    // clientY
+      false,            // ctrlKey
+      false,            // altKey
+      false,            // shiftKey
+      false,            // metaKey
+      0,                // button
+      null              // relatedTarget
     );
 
     // Dispatch the simulated event to the target element
@@ -81,6 +81,8 @@
 
     // Track movement to determine if interaction was a click
     self._touchMoved = false;
+    // Interaction time
+    this._startedMove = event.timeStamp;
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -103,8 +105,11 @@
       return;
     }
 
-    // Interaction was not a click
+    // Interaction was moved
     this._touchMoved = true;
+
+
+
 
     // Simulate the mousemove event
     simulateMouseEvent(event, 'mousemove');
@@ -127,9 +132,10 @@
     // Simulate the mouseout event
     simulateMouseEvent(event, 'mouseout');
 
-    // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
 
+    // If the touch interaction did not move or was a fast click, it should trigger a click
+    var timeMoving = event.timeStamp - this._startedMove;
+    if (!this._touchMoved || timeMoving < 500) {
       // Simulate the click event
       simulateMouseEvent(event, 'click');
     }
@@ -145,7 +151,7 @@
    * original mouse event handling methods.
    */
   mouseProto._mouseInit = function () {
-    
+
     var self = this;
 
     // Delegate the touch handlers to the widget's element
@@ -163,7 +169,7 @@
    * Remove the touch event handlers
    */
   mouseProto._mouseDestroy = function () {
-    
+
     var self = this;
 
     // Delegate the touch handlers to the widget's element
