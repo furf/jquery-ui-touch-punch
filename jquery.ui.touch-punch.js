@@ -206,7 +206,7 @@
 
     _mouseDown.call(self, event);
 
-    if (event.isDefaultPrevented()) {
+    if (event.isDefaultPrevented() && touchEvent) {
       touchEvent.preventDefault();
       touchStartDefaultPrevented = true;
     }
@@ -223,7 +223,7 @@
 
     _mouseMove.call(self, event);
 
-    if (event.isDefaultPrevented()) {
+    if (event.isDefaultPrevented() && touchEvent) {
       touchEvent.preventDefault();
     }
   };
