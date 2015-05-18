@@ -22,7 +22,8 @@
       _mouseInit = mouseProto._mouseInit,
       _mouseDestroy = mouseProto._mouseDestroy,
       startEvent,
-      touchHandled;
+      touchHandled,
+      touchMoved;
 
   /**
    * Simulate a mouse event based on a corresponding touch event
@@ -81,7 +82,7 @@
     touchHandled = true;
 
     // Track movement to determine if interaction was a click
-    self._touchMoved = false;
+    touchMoved = false;
 
     // Track starting event
     startEvent = event;
@@ -114,12 +115,12 @@
         endY = event.originalEvent.touches[0].screenY;
 
     if (startX === endX && startY === endY) {
-      this._touchMoved = false;
+      touchMoved = false;
       return;
     }
 
     // Interaction was not a click
-    this._touchMoved = true;
+    touchMoved = true;
 
     // Simulate the mousemove event
     simulateMouseEvent(event, 'mousemove');
@@ -143,7 +144,7 @@
     simulateMouseEvent(event, 'mouseout');
 
     // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
+    if (!touchMoved) {
 
       // Simulate the click event
       simulateMouseEvent(event, 'click');
