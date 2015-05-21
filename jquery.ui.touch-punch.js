@@ -21,7 +21,7 @@
   var mouseProto = $.ui.mouse.prototype,
       _mouseInit = mouseProto._mouseInit,
       _mouseDestroy = mouseProto._mouseDestroy,
-      startEvent,
+      startX, startY,
       touchHandled,
       touchMoved;
 
@@ -85,7 +85,8 @@
     touchMoved = false;
 
     // Track starting event
-    startEvent = event;
+    startX = event.originalEvent.touches[0].screenX;
+    startY = event.originalEvent.touches[0].screenY;
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -109,9 +110,7 @@
     }
 
     // Ignore event if no change in position from starting event
-    var startX = startEvent.originalEvent.touches[0].screenX,
-        startY = startEvent.originalEvent.touches[0].screenY,
-        endX = event.originalEvent.touches[0].screenX,
+    var endX = event.originalEvent.touches[0].screenX,
         endY = event.originalEvent.touches[0].screenY;
 
     if (startX === endX && startY === endY) {
