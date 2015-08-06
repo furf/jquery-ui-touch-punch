@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 0.2.3
+ * jQuery UI Touch Punch 0.2.3+0.0.1
  *
  * Copyright 2011–2014, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -14,7 +14,7 @@
     // AMD. Register as an anonymous module.
     define([
       'jquery',
-      'jquery-ui/mouse'
+      'jquery-ui'
     ], factory);
   } else {
 
