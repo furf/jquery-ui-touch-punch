@@ -21,6 +21,7 @@
   var mouseProto = $.ui.mouse.prototype,
       _mouseInit = mouseProto._mouseInit,
       _mouseDestroy = mouseProto._mouseDestroy,
+      _mouseMove = mouseProto._mouseMove,
       touchHandled;
 
   /**
@@ -157,6 +158,16 @@
 
     // Call the original $.ui.mouse init method
     _mouseInit.call(self);
+  };
+
+  mouseProto._mouseMove = function (event) {
+    // Safari under iOS 6 sometimes emits completely nonsensical MouseEvents during dragging, which
+    // spuriously interrupt the user's dragging. These events can be identified by the fact that
+    // their 'which' and 'button' properties are equal; this should be impossible by the definition
+    // of those two properties. So if we ignore those events, draggables work properly under iOS 6.
+    if (event.which !== event.button) {
+      _mouseMove.apply(this, arguments);
+    }
   };
 
   /**
