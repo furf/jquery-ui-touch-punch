@@ -5,6 +5,6 @@
   "ignore": [],
   "dependencies": {
     "jquery": ">=1.6",
-    "jquery-ui": "lmartorella/jquery-ui#e0e9ae394dff5892c57dc8d3a347d7f9ba63c577"
+    "jquery-ui": "lmartorella/jquery-ui#79cf5715063ce20ac77ad5e58e6d1230d33e22f2"
   }
 }
