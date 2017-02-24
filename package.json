@@ -1,0 +1,19 @@
+{
+  "name": "jqueryui-touch-punch",
+  "version": "0.2.3",
+  "description": "jQuery UI Touch Punch",
+  "main": "jquery.ui.touch-punch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mappy/jquery-ui-touch-punch.git"
+  },
+  "author": "Dave Furfero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mappy/jquery-ui-touch-punch/issues"
+  },
+  "homepage": "https://github.com/Mappy/jquery-ui-touch-punch#readme"
+}
