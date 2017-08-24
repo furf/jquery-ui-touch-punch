@@ -37,5 +37,13 @@ Just follow these simple steps to enable touch events in your jQuery UI app:
     ```html
     <script>$('#widget').draggable();</script>
     ```
+  
+4. (Optional) Define a delay in milliseconds before touch events get translated to mouse events by setting `window.touchPunchDelay`. 
+    
+    ```html
+    <script>touchPunchDelay=1000;</script>
+    ```
+    
+    This is useful if you are using touch punch to enable drag & drop for touch devices and want to eliminate accidental dragging on scroll.
 
 _Tested on iPad, iPhone, Android and other touch-enabled mobile devices._
