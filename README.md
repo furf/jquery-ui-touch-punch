@@ -13,6 +13,9 @@ As I said, Touch Punch is a hack. It [duck punches](http://en.wikipedia.org/wiki
 
 This code is dual licensed under the MIT or GPL Version 2 licenses and is therefore free to use, modify and/or distribute, but if you include Touch Punch in other software packages or plugins, please include an attribution to the original software and a link to [this Touch Punch website](http://touchpunch.furf.com/).
 
+## Fix problem
+1. Fix touch punch click button
+
 ## Using Touch Punch is as easy as 1, 2…
 
 Just follow these simple steps to enable touch events in your jQuery UI app:
