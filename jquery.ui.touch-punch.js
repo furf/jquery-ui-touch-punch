@@ -1,17 +1,32 @@
 /*!
- * jQuery UI Touch Punch 0.2.3
+ * Ronni Skansing jQuery UI Touch Punch 0.3.0
  *
- * Copyright 2011–2014, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
- *
- * Depends:
- *  jquery.ui.widget.js
- *  jquery.ui.mouse.js
  */
 (function ($) {
 
+  function detectTouchscreen() {
+    var result = false;
+    if (window.PointerEvent && ('maxTouchPoints' in navigator)) {
+      // if Pointer Events are supported, just check maxTouchPoints
+      if (navigator.maxTouchPoints > 0) {
+        result = true;
+      }
+    } else {
+      // no Pointer Events...
+      if (window.matchMedia && window.matchMedia("(any-pointer:coarse)").matches) {
+        // check for any-pointer:coarse which mostly means touchscreen
+        result = true;
+      } else if (window.TouchEvent || ('ontouchstart' in window)) {
+        // last resort - check for exposed touch events API / event handler
+        result = true;
+      }
+    }
+    return result;
+  }
+
   // Detect touch support
-  $.support.touch = 'ontouchend' in document;
+  $.support.touch = detectTouchscreen();
 
   // Ignore browsers without touch support
   if (!$.support.touch) {
