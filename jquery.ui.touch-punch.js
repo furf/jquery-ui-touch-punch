@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.0.0
+ * jQuery UI Touch Punch 1.0.2
  *
  * Copyright 2011–2014, Dave Furfero
  * Updated by RWAP (2019) to take into account various suggestions
@@ -9,15 +9,25 @@
  *  jquery.ui.widget.js
  *  jquery.ui.mouse.js
  */
-(function ($) {
+(function( factory ) {
+    if ( typeof define === "function" && define.amd ) {
+
+        // AMD. Register as an anonymous module.
+        define([ "jquery", "jquery.ui" ], factory );
+    } else {
+
+        // Browser globals
+        factory( jQuery );
+    }
+}(function ($) {
 
   // Detect touch support
   // $.support.touch = 'ontouchend' in document;
   $.support.touch = ('ontouchstart' in document || 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
 
-  // Ignore browsers without touch support
-  if (!$.support.touch) {
-    return;
+  // Ignore browsers without touch or mouse support
+	if (!$.support.touch || !$.ui.mouse) {
+		return;
   }
 
   var mouseProto = $.ui.mouse.prototype,
