@@ -153,7 +153,7 @@
     if ((Math.abs(endPos.x - this._startPos.x) < 10) && (Math.abs(endPos.y - this._startPos.y) < 10)) {
 
         // If the touch interaction did not move, it should trigger a click
-        if (!this._touchMoved) {
+        if (!this._touchMoved || event.originalEvent.changedTouches[0].touchType === 'stylus') {
             // Simulate the click event
             simulateMouseEvent(event, 'click');
         }
