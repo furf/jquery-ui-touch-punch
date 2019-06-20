@@ -1,0 +1,15 @@
+{
+  "name": "jquery-ui-touch-punch",
+  "version": "0.2.3",
+  "main": "jquery.ui.touch-punch.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furf/jquery-ui-touch-punch.git"
+  },
+  "author": "Dave Furfero (https://github.com/furf)",
+  "bugs": {
+    "url": "https://github.com/furf/jquery-ui-touch-punch/issues"
+  },
+  "homepage": "https://github.com/furf/jquery-ui-touch-punch",
+  "license": "ISC"
+}
