@@ -25,9 +25,9 @@
   // $.support.touch = 'ontouchend' in document;
   $.support.touch = ('ontouchstart' in document || 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
 
-  // Ignore browsers without touch support
-  if (!$.support.touch) {
-    return;
+  // Ignore browsers without touch or mouse support
+  if (!$.support.touch || !$.ui.mouse) {
+		return;
   }
 
   var mouseProto = $.ui.mouse.prototype,
@@ -57,13 +57,6 @@
     if (event.originalEvent.touches.length > 1) {
       return;
     }
-    
-    // Support for buttons and input etc within a drag div - no longer required, as we test to see if you have moved the pointer more than 10px before treating it as a drag
-    //if ($(event.target).is("input") || $(event.target).is("textarea") || $(event.target).is("button")) {
-    //    event.stopPropagation();
-    //} else {
-    // event.preventDefault();
-    //}     
 
     event.preventDefault();
 
@@ -167,7 +160,7 @@
     // Check for this in two ways - length of time of simulation and distance moved
     // Allow for Apple Stylus to be used also
     var timeMoving = event.timeStamp - this._startedMove;
-    if (!this._touchMoved || event.originalEvent.changedTouches[0].touchType === 'stylus' || timeMoving < 500) {
+    if (!this._touchMoved || timeMoving < 500) {
         // Simulate the click event
         simulateMouseEvent(event, 'click');
     }    
@@ -176,7 +169,7 @@
     if ((Math.abs(endPos.x - this._startPos.x) < 10) && (Math.abs(endPos.y - this._startPos.y) < 10)) {
 
         // If the touch interaction did not move, it should trigger a click
-        if (!this._touchMoved) {
+        if (!this._touchMoved || event.originalEvent.changedTouches[0].touchType === 'stylus') {
             // Simulate the click event
             simulateMouseEvent(event, 'click');
         }
