@@ -1,8 +1,8 @@
 /*!
- * jQuery UI Touch Punch 1.0.2
+ * jQuery UI Touch Punch 1.0.3 as modified by RWAP Software (based on original touchpunch v0.2.3 which has not been updated since 2014)
  *
+ * Updates to take account of various suggested changes on the original code issues
  * Copyright 2011–2014, Dave Furfero
- * Updated by RWAP (2019) to take into account various suggestions
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
  * Depends:
@@ -25,9 +25,9 @@
   // $.support.touch = 'ontouchend' in document;
   $.support.touch = ('ontouchstart' in document || 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
 
-  // Ignore browsers without touch or mouse support
-	if (!$.support.touch || !$.ui.mouse) {
-		return;
+  // Ignore browsers without touch support
+  if (!$.support.touch) {
+    return;
   }
 
   var mouseProto = $.ui.mouse.prototype,
@@ -58,10 +58,12 @@
       return;
     }
     
-    // Support for buttons and input etc within a drag div
-    if ($(event.target).is("input") || $(event.target).is("textarea") || $(event.target).is("button")) {
-        return;
-    }     
+    // Support for buttons and input etc within a drag div - no longer required, as we test to see if you have moved the pointer more than 10px before treating it as a drag
+    //if ($(event.target).is("input") || $(event.target).is("textarea") || $(event.target).is("button")) {
+    //    event.stopPropagation();
+    //} else {
+    // event.preventDefault();
+    //}     
 
     event.preventDefault();
 
@@ -77,8 +79,8 @@
       1,                // detail                     
       touch.screenX,    // screenX                    
       touch.screenY,    // screenY                    
-      touch.clientX,    // clientX + scrollLeft
-      touch.clientY,    // clientY + scrollTop
+      touch.clientX,    // clientX
+      touch.clientY,    // clientY
       false,            // ctrlKey                    
       false,            // altKey                     
       false,            // shiftKey                   
@@ -112,6 +114,9 @@
 
     // Track movement to determine if interaction was a click
     self._touchMoved = false;
+    
+    // Interaction time
+    this._startedMove = event.timeStamp;    
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -134,7 +139,7 @@
       return;
     }
 
-    // Interaction was not a click
+    // Interaction was moved
     this._touchMoved = true;
 
     // Simulate the mousemove event
@@ -159,11 +164,19 @@
     simulateMouseEvent(event, 'mouseout');
 
     // If the touch interaction did not move, it should trigger a click
+    // Check for this in two ways - length of time of simulation and distance moved
+    // Allow for Apple Stylus to be used also
+    var timeMoving = event.timeStamp - this._startedMove;
+    if (!this._touchMoved || event.originalEvent.changedTouches[0].touchType === 'stylus' || timeMoving < 500) {
+        // Simulate the click event
+        simulateMouseEvent(event, 'click');
+    }    
+        
     var endPos = getTouchCoords(event);
     if ((Math.abs(endPos.x - this._startPos.x) < 10) && (Math.abs(endPos.y - this._startPos.y) < 10)) {
 
         // If the touch interaction did not move, it should trigger a click
-        if (!this._touchMoved || event.originalEvent.changedTouches[0].touchType === 'stylus') {
+        if (!this._touchMoved) {
             // Simulate the click event
             simulateMouseEvent(event, 'click');
         }
