@@ -163,16 +163,16 @@
     if (!this._touchMoved || timeMoving < 500) {
         // Simulate the click event
         simulateMouseEvent(event, 'click');
-    }    
-        
-    var endPos = getTouchCoords(event);
-    if ((Math.abs(endPos.x - this._startPos.x) < 10) && (Math.abs(endPos.y - this._startPos.y) < 10)) {
+    } else {
+      var endPos = getTouchCoords(event);
+      if ((Math.abs(endPos.x - this._startPos.x) < 10) && (Math.abs(endPos.y - this._startPos.y) < 10)) {
 
-        // If the touch interaction did not move, it should trigger a click
-        if (!this._touchMoved || event.originalEvent.changedTouches[0].touchType === 'stylus') {
-            // Simulate the click event
-            simulateMouseEvent(event, 'click');
-        }
+          // If the touch interaction did not move, it should trigger a click
+          if (!this._touchMoved || event.originalEvent.changedTouches[0].touchType === 'stylus') {
+              // Simulate the click event
+              simulateMouseEvent(event, 'click');
+          }
+      }
     }
 
     // Unset the flag to allow other widgets to inherit the touch event
