@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.0.3 as modified by RWAP Software (based on original touchpunch v0.2.3 which has not been updated since 2014)
+ * jQuery UI Touch Punch 1.0.5 as modified by RWAP Software (based on original touchpunch v0.2.3 which has not been updated since 2014)
  *
  * Updates to take account of various suggested changes on the original code issues
  * Copyright 2011–2014, Dave Furfero
@@ -22,8 +22,13 @@
 }(function ($) {
 
   // Detect touch support
-  // $.support.touch = 'ontouchend' in document;
-  $.support.touch = ('ontouchstart' in document || 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
+  $.support.touch = ( 'ontouchstart' in document 
+   	|| 'ontouchstart' in window 
+   	|| window.TouchEvent 
+   	|| (window.DocumentTouch && document instanceof DocumentTouch) 
+   	|| navigator.maxTouchPoints > 0 
+   	|| navigator.msMaxTouchPoints > 0
+  );	
 
   // Ignore browsers without touch or mouse support
   if (!$.support.touch || !$.ui.mouse) {
