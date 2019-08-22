@@ -37,7 +37,7 @@ Just follow these simple steps to enable touch events in your jQuery UI app:
     Please note that if you are using jQuery UI's components, Touch Punch must be included after jquery.ui.mouse.js, as Touch Punch modifies its behavior.
 
     ```html
-    <script src="jquery.ui.touch-punch.min.js"></script>
+    <script src="jquery.ui.touch-punch.js"></script>
     ```
 
 3. There is no 3. Just use jQuery UI as expected and watch it work at the touch of a finger.
