@@ -104,6 +104,12 @@
   mouseProto._touchStart = function (event) {
 
     var self = this;
+	  
+    // Interaction time
+    this._startedMove = event.timeStamp;   	  
+	  
+    // Track movement to determine if interaction was a click
+    self._startPos = getTouchCoords(event);      
 
     // Ignore the event if another widget is already being handled
     if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
@@ -114,13 +120,7 @@
     touchHandled = true;
     
     // Track movement to determine if interaction was a click
-    self._startPos = getTouchCoords(event);    
-
-    // Track movement to determine if interaction was a click
-    self._touchMoved = false;
-    
-    // Interaction time
-    this._startedMove = event.timeStamp;    
+    self._touchMoved = false;   
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -185,6 +185,9 @@
           }
       }
     }
+	  
+    // Unset the flag to determine the touch movement stopped
+    this._touchMoved = false;	  
 
     // Unset the flag to allow other widgets to inherit the touch event
     touchHandled = false;
