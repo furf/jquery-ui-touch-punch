@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.0.6 as modified by RWAP Software
+ * jQuery UI Touch Punch 1.0.7 as modified by RWAP Software
  * based on original touchpunch v0.2.3 which has not been updated since 2014
  *
  * Updates by RWAP Software to take account of various suggested changes on the original code issues
