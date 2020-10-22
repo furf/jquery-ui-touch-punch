@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.0.7 as modified by RWAP Software
+ * jQuery UI Touch Punch 1.0.8 as modified by RWAP Software
  * based on original touchpunch v0.2.3 which has not been updated since 2014
  *
  * Updates by RWAP Software to take account of various suggested changes on the original code issues
@@ -27,7 +27,8 @@
     }
 }(function ($) {
 
-  // Detect touch support
+  // Detect touch support - Windows Surface devices and other touch devices
+  $.support.mspointer = window.navigator.msPointerEnabled;		
   $.support.touch = ( 'ontouchstart' in document
    	|| 'ontouchstart' in window
    	|| window.TouchEvent
@@ -37,8 +38,8 @@
   );
 
   // Ignore browsers without touch or mouse support
-  if (!$.support.touch || !$.ui.mouse) {
-		return;
+  if ((!$.support.touch && !$.support.mspointer) || !$.ui.mouse) {
+	return;
   }
 
   var mouseProto = $.ui.mouse.prototype,
@@ -205,6 +206,11 @@
   mouseProto._mouseInit = function () {
 
     var self = this;
+	  
+    // Microsoft Surface Support = remove original touch Action
+    if ($.support.mspointer) {
+      self.element[0].style.msTouchAction = 'none';
+    }	  
 
     // Delegate the touch handlers to the widget's element
     self.element.on({
