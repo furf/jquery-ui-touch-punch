@@ -1,6 +1,6 @@
 {
   "name": "@rwap/jquery-ui-touch-punch",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "A duck punch for adding touch events to jQuery UI",
   "browser": "jquery.ui.touch-punch.js",
   "repository": "https://github.com/RWAP/jquery-ui-touch-punch.git",
