@@ -1,0 +1,9 @@
+Whilst implementing this, we noticed that on some mobile phones there were still some issues:
+
+a) If you have a jquery-ui dialog box open, it could be nigh impossible to use the close icon in the top right hand
+corner on some phones.
+After some experimentation, we found that we had to check if the screen size <= 480 and in that case, set the dialog 
+"draggable" setting to false
+
+Presumably the phone was struggling to work out if we were trying to drag a box which might only be a couple of pixels smaller
+than the width of the screen, or we wanted to hit the close icon.
