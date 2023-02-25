@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.0.8 as modified by RWAP Software
+ * jQuery UI Touch Punch 1.0.9 as modified by RWAP Software
  * based on original touchpunch v0.2.3 which has not been updated since 2014
  *
  * Updates by RWAP Software to take account of various suggested changes on the original code issues
@@ -67,6 +67,11 @@
 
     // Ignore multi-touch events
     if (event.originalEvent.touches.length > 1) {
+      return;
+    }
+
+    //Ignore input or textarea elements so user can still enter text
+    if ($(event.target).is("input") || $(event.target).is("textarea")) {
       return;
     }
 
