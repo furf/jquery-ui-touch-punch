@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.0.9 as modified by RWAP Software
+ * jQuery UI Touch Punch 1.1.0 as modified by RWAP Software
  * based on original touchpunch v0.2.3 which has not been updated since 2014
  *
  * Updates by RWAP Software to take account of various suggested changes on the original code issues
@@ -84,23 +84,15 @@
         simulatedEvent = document.createEvent('MouseEvents');
 
     // Initialize the simulated mouse event using the touch event's coordinates
-    simulatedEvent.initMouseEvent(
-      simulatedType,    // type
-      true,             // bubbles
-      true,             // cancelable
-      window,           // view
-      1,                // detail
-      touch.screenX,    // screenX
-      touch.screenY,    // screenY
-      touch.clientX,    // clientX
-      touch.clientY,    // clientY
-      false,            // ctrlKey
-      false,            // altKey
-      false,            // shiftKey
-      false,            // metaKey
-      0,                // button
-      null              // relatedTarget
-    );
+    simulatedEvent.MouseEvent(simulatedType, {
+      bubbles: true,
+      cancelable: true,
+      view:window,
+      screenX:touch.screenX,
+      screenY:touch.screenY,
+      clientX:touch.clientX, 
+      clientY:touch.clientY
+    });
 
     // Dispatch the simulated event to the target element
     event.target.dispatchEvent(simulatedEvent);
