@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.1.0 as modified by RWAP Software
+ * jQuery UI Touch Punch 1.1.1 as modified by RWAP Software
  * based on original touchpunch v0.2.3 which has not been updated since 2014
  *
  * Updates by RWAP Software to take account of various suggested changes on the original code issues
@@ -210,11 +210,11 @@
     }	  
 
     // Delegate the touch handlers to the widget's element
-    self.element.on({
-      touchstart: $.proxy(self, '_touchStart'),
-      touchmove: $.proxy(self, '_touchMove'),
-      touchend: $.proxy(self, '_touchEnd')
-    });
+    self.element.bind(
+      {'touchstart': mouseProto._touchStart},
+      {'touchmove': mouseProto._touchMove},
+      {'touchend': mouseProto._touchEnd}
+    );
 
     // Call the original $.ui.mouse init method
     _mouseInit.call(self);
@@ -228,11 +228,11 @@
     let self = this;
 
     // Delegate the touch handlers to the widget's element
-    self.element.off({
-      touchstart: $.proxy(self, '_touchStart'),
-      touchmove: $.proxy(self, '_touchMove'),
-      touchend: $.proxy(self, '_touchEnd')
-    });
+    self.element.unbind(
+      {'touchstart': mouseProto._touchStart},
+      {'touchmove': mouseProto._touchMove},
+      {'touchend': mouseProto._touchEnd}
+    );
 
     // Call the original $.ui.mouse destroy method
     _mouseDestroy.call(self);
