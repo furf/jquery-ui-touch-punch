@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 1.1.2 as modified by RWAP Software
+ * jQuery UI Touch Punch 1.1.3 as modified by RWAP Software
  * based on original touchpunch v0.2.3 which has not been updated since 2014
  *
  * Updates by RWAP Software to take account of various suggested changes on the original code issues
@@ -196,7 +196,7 @@
 
   let _touchStartBound = mouseProto._touchStart.bind(mouseProto),
       _touchMoveBound = mouseProto._touchMove.bind(mouseProto),
-      _touchEndBound = mouseProto._touchEndBound.bind(mouseProto);
+      _touchEndBound = mouseProto._touchEnd.bind(mouseProto);
 
   /**
    * A duck punch of the $.ui.mouse _mouseInit method to support touch events.
