@@ -45,7 +45,7 @@
   let mouseProto = $.ui.mouse.prototype,
       _mouseInit = mouseProto._mouseInit,
       _mouseDestroy = mouseProto._mouseDestroy,
-      touchHandled;
+      touchHandled, lastClickTime  = 0;
 
     /**
     * Get the x,y position of a touch event
@@ -81,18 +81,15 @@
     }
 
     let touch = event.originalEvent.changedTouches[0],
-        simulatedEvent = document.createEvent('MouseEvents');
-
-    // Initialize the simulated mouse event using the touch event's coordinates
-    simulatedEvent.MouseEvent(simulatedType, {
-      bubbles: true,
-      cancelable: true,
-      view:window,
-      screenX:touch.screenX,
-      screenY:touch.screenY,
-      clientX:touch.clientX, 
-      clientY:touch.clientY
-    });
+        simulatedEvent = new MouseEvent(simulatedType, {
+          bubbles: true,
+          cancelable: true,
+          view:window,
+          screenX:touch.screenX,
+          screenY:touch.screenY,
+          clientX:touch.clientX,
+          clientY:touch.clientY
+        });
 
     // Dispatch the simulated event to the target element
     event.target.dispatchEvent(simulatedEvent);
@@ -174,7 +171,11 @@
     let timeMoving = event.timeStamp - this._startedMove;
     if (!this._touchMoved || timeMoving < 500) {
         // Simulate the click event
-        simulateMouseEvent(event, 'click');
+        if( event.timeStamp - lastClickTime < 400 )
+            simulateMouseEvent(event, 'dblclick');
+        else
+            simulateMouseEvent(event, 'click');
+        lastClickTime = event.timeStamp;	    
     } else {
       let endPos = getTouchCoords(event);
       if ((Math.abs(endPos.x - this._startPos.x) < 10) && (Math.abs(endPos.y - this._startPos.y) < 10)) {
